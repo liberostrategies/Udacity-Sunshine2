@@ -1,19 +1,9 @@
 package com.example.android.sunshine.app;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,7 +14,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new ForecastFragment())
                     .commit();
         }
     }
@@ -51,50 +41,4 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        /**
-         * Weather forecast adapter.
-         */
-        private ArrayAdapter<String> mForecastAdapter;
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-            // Dummy data to display in listview_forecast.
-            String[] forecastArray = {
-                "Today - Sunny - 88/63",
-                "Tomorrow - Foggy - 70/40",
-                "Weds - Cloudy - 72/63",
-                "Thurs - Asteroids - 75/65",
-                "Fri - Heavy Rain - 65/56",
-                "Sat - HELP TRAPPED IN WEATHERSTATION - 60/51",
-                "Sun - Sunny - 80/68"
-            };
-            List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
-
-            // Initialize adapter.
-            mForecastAdapter = new ArrayAdapter<String>(
-                // context - Contains global info about app environment. Access system resources.
-                getActivity(),
-                // layout - xml layout file
-                R.layout.list_item_forecast,
-                // view - view id
-                R.id.list_item_forecast_textview,
-                // list of data
-                weekForecast);
-
-            ListView listViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
-            listViewForecast.setAdapter(mForecastAdapter);
-            return rootView;
-        }
-    }
 }
