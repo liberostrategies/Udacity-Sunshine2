@@ -10,15 +10,20 @@ package com.example.android.sunshine.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
+    private final String LOG_TAG = DetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,7 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new DetailFragment())
                     .commit();
         }
     }
@@ -58,9 +63,15 @@ public class DetailActivity extends ActionBarActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class DetailFragment extends Fragment {
+        private final String LOG_TAG = DetailFragment.class.getSimpleName();
 
-        public PlaceholderFragment() {
+        private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
+
+        private String mForecastStr;
+
+        public DetailFragment() {
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -70,8 +81,41 @@ public class DetailActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             TextView txtDetailedForecast = (TextView)rootView.findViewById(R.id.detailed_text);
             Intent intent = getActivity().getIntent();
-            txtDetailedForecast.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
+                mForecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+                txtDetailedForecast.setText(mForecastStr);
+            }
             return rootView;
+        }
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.detailfragment, menu);
+
+            // Retrieve the share menu item.
+            MenuItem menuItem = menu.findItem(R.id.action_share);
+
+            // Get the provider and hold onto it to set/change the share intent.
+            ShareActionProvider mShareActionProvider =
+                    (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+            // Attach intent to this ShareActionProvider. Update any time.
+            if (mShareActionProvider != null) {
+                mShareActionProvider.setShareIntent(createShareForecastIntent());
+            } else {
+                Log.d(LOG_TAG, "Share Action Provider is null");
+            }
+        }
+
+        private Intent createShareForecastIntent() {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            // Prevents activity sharing to from being added to activity stack.
+            // Returns to this app instead.
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT,
+                    mForecastStr + FORECAST_SHARE_HASHTAG);
+            return shareIntent;
         }
     }
 }
