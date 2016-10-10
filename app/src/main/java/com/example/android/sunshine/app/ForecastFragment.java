@@ -86,7 +86,7 @@ public class ForecastFragment extends Fragment {
                 R.layout.list_item_forecast,
                 // view - view id
                 R.id.list_item_forecast_textview,
-                // list of data
+                // list of com.example.android.sunshine.app.data
                 weekForecast);
 
         ListView listViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
@@ -167,7 +167,7 @@ public class ForecastFragment extends Fragment {
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
 
-                final String BASE_URL_FORECAST = "http://api.openweathermap.org/data/2.5/forecast/daily";
+                final String BASE_URL_FORECAST = "http://api.openweathermap.org/com.example.android.sunshine.app.data/2.5/forecast/daily";
                 final String PARAM_APPID = "APPID";
                 final String PARAM_QUERY = "q";
                 final String PARAM_FORMAT = "mode";
@@ -216,12 +216,12 @@ public class ForecastFragment extends Fragment {
                 try {
                     weatherData = getWeatherDataFromJson(forecastJsonStr, numDays);
                 } catch (JSONException jse) {
-                    Log.e(LOG_TAG, "Error parsing weather data JSON", jse);
+                    Log.e(LOG_TAG, "Error parsing weather com.example.android.sunshine.app.data JSON", jse);
                     return null;
                 }
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
+                // If the code didn't successfully get the weather com.example.android.sunshine.app.data, there's no point in attemping
                 // to parse it.
                 return null;
             } finally{
@@ -269,7 +269,7 @@ public class ForecastFragment extends Fragment {
 
         /**
          * Take the String representing the complete forecast in JSON Format and
-         * pull out the data we need to construct the Strings needed for the wireframes.
+         * pull out the com.example.android.sunshine.app.data we need to construct the Strings needed for the wireframes.
          *
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
@@ -289,10 +289,10 @@ public class ForecastFragment extends Fragment {
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
             // OWM returns daily forecasts based upon the local time of the city that is being
-            // asked for, which means that we need to know the GMT offset to translate this data
+            // asked for, which means that we need to know the GMT offset to translate this com.example.android.sunshine.app.data
             // properly.
 
-            // Since this data is also sent in-order and the first day is always the
+            // Since this com.example.android.sunshine.app.data is also sent in-order and the first day is always the
             // current day, we're going to take advantage of that to get a nice
             // normalized UTC date for all of our weather.
 
@@ -310,7 +310,7 @@ public class ForecastFragment extends Fragment {
             // Data is fetched in Celsius by default.
             // If user prefers to see in Fahrenheit, convert the values here.
             // We do this rather than fetching in Fahrenheit so that the user can
-            // change this option without us having to re-fetch the data once
+            // change this option without us having to re-fetch the com.example.android.sunshine.app.data once
             // we start storing the values in a database.
             SharedPreferences sharedPrefs =
                     PreferenceManager.getDefaultSharedPreferences(getActivity());
