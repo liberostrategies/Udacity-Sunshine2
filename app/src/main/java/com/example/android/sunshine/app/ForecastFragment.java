@@ -117,5 +117,5 @@ public class ForecastFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
-    
+
 }
