@@ -4,13 +4,59 @@
   ~ Unauthorized copying of this file, via any medium is strictly prohibited
   ~ Proprietary and Confidential
   -->
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:id="@+id/list_item_forecast_textview"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:text="Today - Sunny - 88 / 63"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    android:padding="16dp"
+    android:orientation="horizontal">
 
-</TextView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_item_image"
+        android:layout_weight="0"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:text="day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_date"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_forecast_textview"
+            android:text="Today - Sunny - 88 / 63"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+
+        <TextView
+            android:text="high"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_temp_max" />
+
+        <TextView
+            android:text="low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_temp_min" />
+    </LinearLayout>
+
+</LinearLayout>
