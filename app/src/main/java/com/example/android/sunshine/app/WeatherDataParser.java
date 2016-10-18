@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 
 /**
- * Parses OpenWeatherMap weather data JSON.
+ * Parses OpenWeatherMap weather com.example.android.sunshine.app.data JSON.
  */
 
 public class WeatherDataParser {

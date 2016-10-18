@@ -11,7 +11,7 @@ import junit.framework.TestCase;
 import org.json.JSONException;
 
 /**
- * Test cases for parsing weather data.
+ * Test cases for parsing weather com.example.android.sunshine.app.data.
  */
 
 public class WeatherDataParserTest extends TestCase {
