@@ -50,7 +50,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_image"
+            android:id="@+id/list_item_icon"
             android:layout_weight="1"
             android:src="@drawable/ic_launcher" />
 

@@ -15,7 +15,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_item_image"
+        android:id="@+id/list_item_icon"
         android:layout_weight="0"
         android:src="@drawable/ic_launcher" />
 
@@ -27,7 +27,6 @@
         android:paddingLeft="16dp">
 
         <TextView
-            android:text="day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_date"
@@ -36,8 +35,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_forecast_textview"
-            android:text="Today - Sunny - 88 / 63"/>
+            android:id="@+id/list_item_forecast" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,13 +45,11 @@
         android:layout_weight="0">
 
         <TextView
-            android:text="high"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_temp_max" />
 
         <TextView
-            android:text="low"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_temp_min" />
