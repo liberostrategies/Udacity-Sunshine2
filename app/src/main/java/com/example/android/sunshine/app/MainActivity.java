@@ -14,15 +14,21 @@ import android.view.MenuItem;
 public class MainActivity extends ActionBarActivity {
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
+    /** Current known location. */
+    private String mLocation;
+
+    private final String FORECASTFRAGEMENT_TAG = "FFTAG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ForecastFragment())
+                    .add(R.id.container, new ForecastFragment(), FORECASTFRAGEMENT_TAG)
                     .commit();
         }
+        mLocation = Utility.getPreferredLocation(this);
     }
 
     @Override

@@ -188,6 +188,8 @@ public class ForecastFragment extends Fragment
         new FetchWeatherTask(getActivity()).execute(locationPref);
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
