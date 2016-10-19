@@ -71,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/detailed_image"
-                        android:src="@drawable/ic_launcher" />
+                        android:src="@mipmap/ic_launcher" />
 
                     <TextView android:text="forecast" android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/list_item_icon"
             android:layout_weight="1"
-            android:src="@drawable/ic_launcher" />
+            android:src="@mipmap/ic_launcher" />
 
         <TextView
             android:text="TextView"

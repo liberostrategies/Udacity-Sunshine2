@@ -57,6 +57,7 @@ public class DetailFragment extends Fragment
             WeatherContract.WeatherEntry.COLUMN_PRESSURE,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
             WeatherContract.WeatherEntry.COLUMN_DEGREES,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
     };
 
     private static final int COL_WEATHER_ID = 0;
@@ -68,6 +69,7 @@ public class DetailFragment extends Fragment
     private static final int COL_WEATHER_PRESSURE = 6;
     private static final int COL_WEATHER_WIND_SPEED = 7;
     private static final int COL_WEATHER_DEGREES = 8;
+    private static final int COL_WEATHER_CONDITION_ID = 9;
 
     private TextView mDateView;
     private TextView mHighTempView;
@@ -165,7 +167,7 @@ public class DetailFragment extends Fragment
             return;
         }
 
-        mImageView.setImageResource(R.drawable.ic_launcher);
+        mImageView.setImageResource(Utility.getArtResourceForWeatherCondition(data.getInt(COL_WEATHER_CONDITION_ID)));
         String dateText = Utility.getFriendlyDayString(getActivity(), data.getLong(COL_WEATHER_DATE));
         mDateView.setText(dateText);
         String weatherDescription = data.getString(COL_WEATHER_DESC);
