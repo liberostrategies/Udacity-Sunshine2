@@ -39,6 +39,9 @@ public class ForecastFragment extends Fragment
     implements LoaderManager.LoaderCallbacks<Cursor> {
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private static final int FORECAST_LOADER = 0;
+    private int mPosition = ListView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
+    private ListView mListViewForecast;
 
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -117,10 +120,10 @@ public class ForecastFragment extends Fragment
                 null, // use the cursor loader
                 0);
 
-        ListView listViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
-        listViewForecast.setAdapter(mForecastAdapter);
+        mListViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
+        mListViewForecast.setAdapter(mForecastAdapter);
 
-//        listViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        mListViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 ////                Context context = getActivity();
@@ -135,7 +138,7 @@ public class ForecastFragment extends Fragment
 //                startActivity(detailsIntent);
 //            }
 //        });
-        listViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView adapterView, View view, int position, long l) {
@@ -149,8 +152,12 @@ public class ForecastFragment extends Fragment
                                     locationSetting, cursor.getLong(COL_WEATHER_DATE)
                             ));
                 }
+                mPosition = position;
             }
         });
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
         return rootView;
     }
 
@@ -176,11 +183,25 @@ public class ForecastFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
+        if (mPosition != ListView.INVALID_POSITION) {
+            mListViewForecast.smoothScrollToPosition(mPosition);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mForecastAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Save list item, when table rotates.
+        // When no item is selected, mPosition will be set to Listvewi.INVALID_POSITION,
+        // so check for that before storing.
+        if (mPosition != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
