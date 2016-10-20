@@ -131,20 +131,14 @@ public class DetailFragment extends Fragment
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        TextView txtDetailedForecast = (TextView)rootView.findViewById(R.id.detailed_text);
-        Intent intent = getActivity().getIntent();
-        if (intent != null) {
-            mForecastStr = intent.getDataString();
-//            txtDetailedForecast.setText(mForecastStr);
-            mDateView = (TextView)rootView.findViewById(R.id.detailed_date);
-            mHighTempView = (TextView)rootView.findViewById(R.id.detailed_temp_max);
-            mLowTempView = (TextView)rootView.findViewById(R.id.detailed_temp_min);
-            mImageView = (ImageView)rootView.findViewById(R.id.detailed_image);
-            mForecastView = (TextView)rootView.findViewById(R.id.detailed_text);
-            mHumidityView = (TextView)rootView.findViewById(R.id.detailed_humidity);
-            mWindView = (TextView)rootView.findViewById(R.id.detailed_wind);
-            mPressureView = (TextView)rootView.findViewById(R.id.detailed_pressure);
-        }
+        mDateView = (TextView)rootView.findViewById(R.id.detailed_date);
+        mHighTempView = (TextView)rootView.findViewById(R.id.detailed_temp_max);
+        mLowTempView = (TextView)rootView.findViewById(R.id.detailed_temp_min);
+        mImageView = (ImageView)rootView.findViewById(R.id.detailed_image);
+        mForecastView = (TextView)rootView.findViewById(R.id.detailed_text);
+        mHumidityView = (TextView)rootView.findViewById(R.id.detailed_humidity);
+        mWindView = (TextView)rootView.findViewById(R.id.detailed_wind);
+        mPressureView = (TextView)rootView.findViewById(R.id.detailed_pressure);
         return rootView;
     }
 
