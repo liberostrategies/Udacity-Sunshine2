@@ -42,6 +42,7 @@ public class ForecastFragment extends Fragment
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
     private ListView mListViewForecast;
+    private boolean mUseTodayLayout;
 
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -119,6 +120,7 @@ public class ForecastFragment extends Fragment
                 getActivity(),
                 null, // use the cursor loader
                 0);
+        mForecastAdapter.setmUseTodayLayout(mUseTodayLayout);
 
         mListViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
         mListViewForecast.setAdapter(mForecastAdapter);
@@ -235,4 +237,10 @@ public class ForecastFragment extends Fragment
         }
     }
 
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+        if (mForecastAdapter != null) {
+            mForecastAdapter.setmUseTodayLayout(mUseTodayLayout);
+        }
+    }
 }
