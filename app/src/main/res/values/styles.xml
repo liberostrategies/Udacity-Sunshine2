@@ -1,6 +1,5 @@
 
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/sunshine_blue</item>
@@ -10,6 +9,10 @@
     <!-- Main activity theme. -->
     <style name="ForecastTheme" parent="AppTheme">
         <item name="actionBarStyle">@style/ActionBar.Solid.Sunshine.NoTitle</item>
+    </style>
+
+    <!-- Settings activity theme. -->
+    <style name="SettingsTheme" parent="AppTheme">
     </style>
 
     <!-- main activity action bar styles -->
@@ -23,5 +26,4 @@
         <!-- Here it's a stub.  In screens of sufficient width, this style includes modifications
         for two-pane layout -->
     </style>
-
 </resources>
