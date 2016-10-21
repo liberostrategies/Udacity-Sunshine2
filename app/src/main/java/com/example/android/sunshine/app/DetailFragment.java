@@ -208,6 +208,8 @@ public class DetailFragment extends Fragment
         mDateView.setText(dateText);
         String weatherDescription = data.getString(COL_WEATHER_DESC);
         mForecastView.setText(weatherDescription);
+        // For accessibility, provide a description of the weather icon.
+        mImageView.setContentDescription(weatherDescription);
         boolean isMetric = Utility.isMetric(getActivity());
         String high = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MAX_TEMP), isMetric);
         mHighTempView.setText(high);
@@ -220,7 +222,6 @@ public class DetailFragment extends Fragment
         mHumidityView.setText(getActivity().getString(R.string.format_humidity, data.getFloat(COL_WEATHER_HUMIDITY)));
         mWindView.setText(Utility.getFormattedWind(getActivity(), data.getFloat(COL_WEATHER_WIND_SPEED), data.getFloat(COL_WEATHER_DEGREES)));
         mPressureView.setText(getActivity().getString(R.string.format_pressure, data.getFloat(COL_WEATHER_PRESSURE)));
-
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());
         }

@@ -37,10 +37,6 @@ public class ForecastAdapter extends CursorAdapter {
      */
     private String convertCursorRowToUXFormat(Cursor cursor) {
 //        // get row indices for our cursor
-//        int idx_max_temp = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP);
-//        int idx_min_temp = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP);
-//        int idx_date = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE);
-//        int idx_short_desc = cursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC);
         // Use projection instead.
         String highAndLow = formatHighLows(
                 cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP),
@@ -60,8 +56,6 @@ public class ForecastAdapter extends CursorAdapter {
         int viewType = getItemViewType(cursor.getPosition());
         int layoutId = -1;
         // Determine layoutId from viewType.
-//        View view = LayoutInflater.from(context).inflate(R.layout.list_item_forecast, parent, false);
-//        return view;
         switch (viewType) {
             case VIEW_TYPE_TODAY:
                 layoutId = R.layout.list_item_forecast_today;
@@ -133,6 +127,8 @@ public class ForecastAdapter extends CursorAdapter {
         // Read weather forecast from cursor
         String forecast = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
         viewHolder.descriptionView.setText(forecast);
+        // For accessibility, provide a description of the weather icon.
+        viewHolder.iconView.setContentDescription(forecast);
 
         // Read user preference for metric or imperial temperature units
         boolean isMetric = Utility.isMetric(context);

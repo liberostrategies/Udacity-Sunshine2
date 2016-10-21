@@ -124,22 +124,6 @@ public class ForecastFragment extends Fragment
 
         mListViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
         mListViewForecast.setAdapter(mForecastAdapter);
-
-//        mListViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                Context context = getActivity();
-////                CharSequence text = weekForecast.get(position);
-////                int duration = Toast.LENGTH_SHORT;
-////
-////                Toast toast = Toast.makeText(context, text, duration);
-////                toast.show();
-//
-//                Intent detailsIntent = new Intent(getActivity(), DetailActivity.class)
-//                        .putExtra(Intent.EXTRA_TEXT, weekForecast.get(position));
-//                startActivity(detailsIntent);
-//            }
-//        });
         mListViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
