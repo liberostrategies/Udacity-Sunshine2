@@ -7,6 +7,7 @@
 
 <!-- Master layout. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -26,13 +27,8 @@
             <TextView
                 android:id="@+id/detailed_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <!--<TextView-->
-                <!--android:id="@+id/detail_date_textview"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content" />-->
-
+                android:layout_height="wrap_content"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <!-- Main content: high, low, art, weather state -->
@@ -45,28 +41,45 @@
             <TextView
                 android:id="@+id/detailed_temp_max"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="96sp"
+                android:fontFamily="sans-serif-light"
+                android:freezesText="true"
+                android:textColor="@color/grey_700" />
 
             <TextView
                 android:id="@+id/detailed_temp_min"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="48sp"
+                tools:fontFamily="sans-serif-light"
+                android:textColor="@color/grey_700" />
 
             <!-- Humidity, wind, pressure -->
             <TextView
                 android:id="@+id/detailed_humidity"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?android:textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/detailed_pressure"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?android:textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/detailed_wind"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?android:textAppearanceLarge" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +96,8 @@
             <TextView
                 android:id="@+id/detailed_text"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

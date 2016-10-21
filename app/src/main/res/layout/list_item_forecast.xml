@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/list_item_icon"
             android:layout_weight="0"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center" />
     </FrameLayout>
 
     <LinearLayout
@@ -37,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_date"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="20sp"
             android:fontFamily="sans-serif-condensed"
             android:layout_weight="1" />
 
@@ -53,19 +54,22 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/list_item_temp_max" />
+            android:id="@+id/list_item_temp_max"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:id="@+id/list_item_temp_min" />
+            android:id="@+id/list_item_temp_min"
+            android:gravity="center" />
     </LinearLayout>
 
 </LinearLayout>
