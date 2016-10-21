@@ -82,6 +82,7 @@ public class MainActivity extends ActionBarActivity
             }
         } else {
             mTwoPane = false;
+            getSupportActionBar().setElevation(0f);
         }
 
         ForecastFragment forecastFragment = ((ForecastFragment)getSupportFragmentManager()
