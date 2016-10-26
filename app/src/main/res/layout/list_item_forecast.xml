@@ -4,13 +4,73 @@
   ~ Unauthorized copying of this file, via any medium is strictly prohibited
   ~ Proprietary and Confidential
   -->
-
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:id="@+id/list_item_forecast_textview"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:text="Today - Sunny - 88 / 63"
-    android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingLeft="?attr/listPreferredItemPaddingLeft">
+    android:padding="16dp"
+    android:background="@drawable/touch_selector"
+    android:orientation="horizontal">
 
-</TextView>
+    <FrameLayout
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_icon"
+            android:layout_weight="0"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/list_item_date"
+            android:textSize="20sp"
+            android:fontFamily="sans-serif-condensed" />
+            <!--android:layout_weight="1" -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:fontFamily="sans-serif-condensed"
+            android:id="@+id/list_item_forecast" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/list_item_temp_max"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:id="@+id/list_item_temp_min"
+            android:gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>
