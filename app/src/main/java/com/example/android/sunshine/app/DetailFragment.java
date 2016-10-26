@@ -221,6 +221,7 @@ public class DetailFragment extends Fragment
 //        detailTextView.setText(mForecastStr);
         mHumidityView.setText(getActivity().getString(R.string.format_humidity, data.getFloat(COL_WEATHER_HUMIDITY)));
         mWindView.setText(Utility.getFormattedWind(getActivity(), data.getFloat(COL_WEATHER_WIND_SPEED), data.getFloat(COL_WEATHER_DEGREES)));
+//        ((WindView)mWindView).populate(data.getFloat(COL_WEATHER_WIND_SPEED), data.getFloat(COL_WEATHER_DEGREES));
         mPressureView.setText(getActivity().getString(R.string.format_pressure, data.getFloat(COL_WEATHER_PRESSURE)));
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());

@@ -50,6 +50,7 @@
             android:id="@+id/list_item_temp_min"
             android:textSize="36sp"
             android:textColor="@android:color/white" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -74,6 +75,7 @@
             android:layout_gravity="center_horizontal"
             android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@android:color/white" />
+
     </LinearLayout>
 
 </LinearLayout>

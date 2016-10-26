@@ -39,8 +39,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/list_item_date"
             android:textSize="20sp"
-            android:fontFamily="sans-serif-condensed"
-            android:layout_weight="1" />
+            android:fontFamily="sans-serif-condensed" />
+            <!--android:layout_weight="1" -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,6 +48,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/list_item_forecast" />
+
     </LinearLayout>
 
     <LinearLayout

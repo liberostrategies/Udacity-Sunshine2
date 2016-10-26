@@ -72,7 +72,7 @@
                 android:layout_marginTop="4dp"
                 android:textAppearance="?android:textAppearanceLarge" />
 
-            <TextView
+            <com.example.android.sunshine.app.WindView
                 android:id="@+id/detailed_wind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
