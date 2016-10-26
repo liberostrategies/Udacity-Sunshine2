@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 public class WindView extends TextView {
     private Paint mPaint = new Paint();
+    private Paint mPaintNorth = new Paint();
+    private Paint mPaintNeedle = new Paint();
     private float mStartX = 800;
     private float mStartY = 100;
     private float mRadius = 50;
@@ -53,19 +55,17 @@ public class WindView extends TextView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-
-        paint.setColor(Color.BLUE);
-        paint.setTextSize(22);
-        paint.setAntiAlias(true);
-        paint.setTextAlign(Paint.Align.CENTER);
+        mPaintNorth.setStyle(Paint.Style.FILL);
+        mPaintNorth.setColor(Color.BLUE);
+        mPaintNorth.setTextSize(22);
+        mPaintNorth.setAntiAlias(true);
+        mPaintNorth.setTextAlign(Paint.Align.CENTER);
 
         // Draw north indicator.
-        canvas.drawText("N", mStartX, mStartY - mRadius, paint);
+        canvas.drawText("N", mStartX, mStartY - mRadius, mPaintNorth);
 
         // Draw wind data.
-//        canvas.drawText(Float.toString(mSpeed), mStartX, mStartY, paint);
+//        canvas.drawText(Float.toString(mSpeed), mStartX, mStartY, paintNorth);
 
         // Draw circle.
         canvas.drawCircle(
@@ -141,12 +141,11 @@ public class WindView extends TextView {
                 break;
         }
 
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setAntiAlias(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(4.5f);
-        canvas.drawLine(mStartX, mStartY, stopX, stopY, paint);
+        mPaintNeedle.setColor(Color.RED);
+        mPaintNeedle.setAntiAlias(true);
+        mPaintNeedle.setStyle(Paint.Style.STROKE);
+        mPaintNeedle.setStrokeWidth(4.5f);
+        canvas.drawLine(mStartX, mStartY, stopX, stopY, mPaintNeedle);
         return canvas;
     }
 
