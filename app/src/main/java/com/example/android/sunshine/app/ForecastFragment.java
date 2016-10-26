@@ -6,7 +6,6 @@
 
 package com.example.android.sunshine.app;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -40,6 +39,10 @@ public class ForecastFragment extends Fragment
     implements LoaderManager.LoaderCallbacks<Cursor> {
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private static final int FORECAST_LOADER = 0;
+    private int mPosition = ListView.INVALID_POSITION;
+    private static final String SELECTED_KEY = "selected_position";
+    private ListView mListViewForecast;
+    private boolean mUseTodayLayout;
 
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
@@ -76,6 +79,17 @@ public class ForecastFragment extends Fragment
      */
     private ForecastAdapter mForecastAdapter;
 
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri);
+    }
     public ForecastFragment() {
     }
 
@@ -106,26 +120,11 @@ public class ForecastFragment extends Fragment
                 getActivity(),
                 null, // use the cursor loader
                 0);
+        mForecastAdapter.setmUseTodayLayout(mUseTodayLayout);
 
-        ListView listViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
-        listViewForecast.setAdapter(mForecastAdapter);
-
-//        listViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-////                Context context = getActivity();
-////                CharSequence text = weekForecast.get(position);
-////                int duration = Toast.LENGTH_SHORT;
-////
-////                Toast toast = Toast.makeText(context, text, duration);
-////                toast.show();
-//
-//                Intent detailsIntent = new Intent(getActivity(), DetailActivity.class)
-//                        .putExtra(Intent.EXTRA_TEXT, weekForecast.get(position));
-//                startActivity(detailsIntent);
-//            }
-//        });
-        listViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
+        mListViewForecast.setAdapter(mForecastAdapter);
+        mListViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView adapterView, View view, int position, long l) {
@@ -134,14 +133,17 @@ public class ForecastFragment extends Fragment
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
                 if (cursor != null) {
                     String locationSetting = Utility.getPreferredLocation(getActivity());
-                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-                            .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                    ((Callback) getActivity())
+                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
                                     locationSetting, cursor.getLong(COL_WEATHER_DATE)
                             ));
-                    startActivity(intent);
                 }
+                mPosition = position;
             }
         });
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
         return rootView;
     }
 
@@ -167,6 +169,9 @@ public class ForecastFragment extends Fragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mForecastAdapter.swapCursor(data);
+        if (mPosition != ListView.INVALID_POSITION) {
+            mListViewForecast.smoothScrollToPosition(mPosition);
+        }
     }
 
     @Override
@@ -175,11 +180,27 @@ public class ForecastFragment extends Fragment
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Save list item, when table rotates.
+        // When no item is selected, mPosition will be set to Listvewi.INVALID_POSITION,
+        // so check for that before storing.
+        if (mPosition != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         getLoaderManager().initLoader(FORECAST_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
 
+    // since we read the location when we create the loader, all we need to do is restart things
+    void onLocationChanged( ) {
+        updateWeather();
+        getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
+    }
     private void updateWeather() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Resources resources = getActivity().getResources();
@@ -187,8 +208,6 @@ public class ForecastFragment extends Fragment
                 resources.getString(R.string.pref_location_default));
         new FetchWeatherTask(getActivity()).execute(locationPref);
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -202,4 +221,10 @@ public class ForecastFragment extends Fragment
         }
     }
 
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+        if (mForecastAdapter != null) {
+            mForecastAdapter.setmUseTodayLayout(mUseTodayLayout);
+        }
+    }
 }
