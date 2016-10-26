@@ -6,12 +6,10 @@
 
 package com.example.android.sunshine.app;
 
-import android.content.SharedPreferences;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -27,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.service.SunshineService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,12 +201,10 @@ public class ForecastFragment extends Fragment
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
     private void updateWeather() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Resources resources = getActivity().getResources();
-        String locationPref = sharedPref.getString(resources.getString(R.string.pref_location_key),
-                resources.getString(R.string.pref_location_default));
-        new FetchWeatherTask(getActivity()).execute(locationPref);
-    }
+        Intent intent = new Intent(getActivity(), SunshineService.class);
+        intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
+                Utility.getPreferredLocation(getActivity()));
+        getActivity().startService(intent);    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
