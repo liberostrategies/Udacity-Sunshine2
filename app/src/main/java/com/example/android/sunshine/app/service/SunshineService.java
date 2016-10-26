@@ -292,9 +292,9 @@ public class SunshineService extends IntentService {
 //                } while (cur.moveToNext());
 //            }
 
-//            Log.d(LOG_TAG, "FetchWeatherTask Complete. " + cVVector.size() + " Inserted");
+//            Log.d(LOG_TAG, "SunshineService Complete. " + cVVector.size() + " Inserted");
 
-            Log.d(LOG_TAG, "FetchWeatherTask Complete. " + inserted + " Inserted");
+            Log.d(LOG_TAG, "SunshineService Complete. " + inserted + " Inserted");
 
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);

@@ -210,7 +210,7 @@ public class ForecastFragment extends Fragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                // Call the FetchWeatherTask.
+                // Call the SunshineService.
                 updateWeather();
                 return true;
             default:
