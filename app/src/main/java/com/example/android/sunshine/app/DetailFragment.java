@@ -211,9 +211,9 @@ public class DetailFragment extends Fragment
         // For accessibility, provide a description of the weather icon.
         mImageView.setContentDescription(weatherDescription);
         boolean isMetric = Utility.isMetric(getActivity());
-        String high = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MAX_TEMP), isMetric);
+        String high = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MAX_TEMP));
         mHighTempView.setText(high);
-        String min = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MIN_TEMP), isMetric);
+        String min = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MIN_TEMP));
         mLowTempView.setText(min);
 //        TextView detailTextView = (TextView) getView().findViewById(R.id.detailed_text);
         mForecastStr = String.format("%s - %s - %s/%s", dateText, weatherDescription, high, min);

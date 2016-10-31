@@ -6,8 +6,8 @@
 
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,19 +204,49 @@ public class ForecastFragment extends Fragment
         getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
     private void updateWeather() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Resources resources = getActivity().getResources();
-        String locationPref = sharedPref.getString(resources.getString(R.string.pref_location_key),
-                resources.getString(R.string.pref_location_default));
-        new FetchWeatherTask(getActivity()).execute(locationPref);
+        SunshineSyncAdapter.syncImmediately(getActivity());
+//        Intent alarmIntent = new Intent(getActivity(), SunshineService.AlarmReceiver.class);
+//        alarmIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA, Utility.getPreferredLocation(getActivity()));
+//
+//        PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, alarmIntent,
+//                PendingIntent.FLAG_ONE_SHOT);
+//        AlarmManager am = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+5000, pi);
+    }
+
+    private void openPreferredLocationInMap() {
+        SharedPreferences sharedPrefs =
+                PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = sharedPrefs.getString(
+                getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+
+        // Using the URI scheme for showing a location found on a map.  This super-handy
+        // intent can is detailed in the "Common Intents" page of Android's developer site:
+        // http://developer.android.com/guide/components/intents-common.html#Maps
+        Uri geoLocation = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q", location)
+                .build();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_refresh:
-                // Call the FetchWeatherTask.
-                updateWeather();
+//            case R.id.action_refresh:
+//                // Call the SunshineService.
+//                updateWeather();
+//                return true;
+            case R.id.action_map:
+                openPreferredLocationInMap();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
