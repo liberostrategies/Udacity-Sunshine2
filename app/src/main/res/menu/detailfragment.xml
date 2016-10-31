@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016. Libero Strategies, LLC - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and Confidential
+  android.widget.ShareActionProvider
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_share"
+        app:showAsAction="always"
+        android:title="@string/action_share"
+        app:actionProviderClass=
+            "android.support.v7.widget.ShareActionProvider" />
+</menu>
