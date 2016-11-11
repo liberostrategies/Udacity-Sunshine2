@@ -125,6 +125,8 @@ public class ForecastFragment extends Fragment
         mForecastAdapter.setmUseTodayLayout(mUseTodayLayout);
 
         mListViewForecast = (ListView)rootView.findViewById(R.id.listview_forecast);
+        View emptyView = rootView.findViewById(R.id.listview_forecast_empty);
+        mListViewForecast.setEmptyView(emptyView);
         mListViewForecast.setAdapter(mForecastAdapter);
         mListViewForecast.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

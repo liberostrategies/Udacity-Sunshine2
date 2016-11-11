@@ -58,6 +58,9 @@
         <item>Metric</item>
     </array>
 
+    <!-- Empty weather database -->
+    <string name="empty_forecast_list">No Weather Information Available</string>
+
     <!-- Account type (for sync-adapter authenticator) -->
     <!-- SyncAdapter related -->
     <string name="sync_account_type">sunshine.example.com</string>
