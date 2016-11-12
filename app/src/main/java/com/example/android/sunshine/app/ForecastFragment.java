@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.android.sunshine.app.data.WeatherContract;
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
@@ -151,6 +152,20 @@ public class ForecastFragment extends Fragment
         return rootView;
     }
 
+    private void updateEmptyView() {
+        if (mForecastAdapter.getCount() == 0) {
+            TextView tv = (TextView) getView().findViewById(R.id.listview_forecast_empty);
+            if (tv != null) {
+                // If cursor is empty, why? Is there an invalid connection?
+                int message = R.string.empty_forecast_list;
+                if (!Utility.isNetworkAvailable(getActivity())) {
+                    message = R.string.empty_forecast_list_no_network;
+                }
+                tv.setText(message);
+            }
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.forecastfragment, menu);
@@ -176,6 +191,7 @@ public class ForecastFragment extends Fragment
         if (mPosition != ListView.INVALID_POSITION) {
             mListViewForecast.smoothScrollToPosition(mPosition);
         }
+        updateEmptyView();
     }
 
     @Override
