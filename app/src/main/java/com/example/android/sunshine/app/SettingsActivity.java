@@ -15,6 +15,9 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.example.android.sunshine.app.data.WeatherContract;
+import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
+
 /**
  * Created by pink on 10/1/2016.
  */
@@ -53,19 +56,25 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
-        String stringValue = value.toString();
+        String keyValue = value.toString();
 
         if (preference instanceof ListPreference) {
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
             ListPreference listPreference = (ListPreference) preference;
-            int prefIndex = listPreference.findIndexOfValue(stringValue);
+            int prefIndex = listPreference.findIndexOfValue(keyValue);
             if (prefIndex >= 0) {
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
         } else {
+            if (keyValue.equals(getResources().getString(R.string.pref_location_key))) {
+                Utility.resetLocationStatus(this);
+                SunshineSyncAdapter.syncImmediately(this);
+            } else if (keyValue.equals(getResources().getString(R.string.pref_units_key))) {
+                getContentResolver().notifyChange(WeatherContract.WeatherEntry.CONTENT_URI, null);
+            }
             // For other preferences, set the summary to the value's simple string representation.
-            preference.setSummary(stringValue);
+            preference.setSummary(keyValue);
         }
         return true;
     }
@@ -75,4 +84,6 @@ public class SettingsActivity extends PreferenceActivity
     public Intent getParentActivityIntent() {
         return super.getParentActivityIntent().addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     }
+
+
 }

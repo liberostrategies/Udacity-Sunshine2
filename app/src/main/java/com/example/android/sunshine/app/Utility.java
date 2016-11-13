@@ -270,4 +270,15 @@ public class Utility {
                 SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN);
     }
 
+    /**
+     * Reset the location status. (Sets it to SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN)
+     * @param c context used to get the shared preferences.
+     */
+    static public void resetLocationStatus(Context c) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putInt(c.getString(R.string.pref_location_status_key),
+                SunshineSyncAdapter.LOCATION_STATUS_UNKNOWN);
+        spe.apply();
+    }
 }
