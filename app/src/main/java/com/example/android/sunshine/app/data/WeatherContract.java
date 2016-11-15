@@ -87,7 +87,8 @@ public class WeatherContract {
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
         public static final String CONTENT_ITEM_TYPE =
-                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;        public static final String TABLE_NAME = "weather";
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
+        public static final String TABLE_NAME = "weather";
 
         // Column with the foreign key into the location table.
         public static final String COLUMN_LOC_KEY = "location_id";
