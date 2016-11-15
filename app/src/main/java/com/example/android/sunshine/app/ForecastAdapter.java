@@ -120,26 +120,30 @@ public class ForecastAdapter extends CursorAdapter {
                 break;
             }
         }
-
         // Read date from cursor
         String date = Utility.getFriendlyDayString(context, cursor.getLong(ForecastFragment.COL_WEATHER_DATE));
         viewHolder.dateView.setText(date);
         // Read weather forecast from cursor
         String forecast = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
         viewHolder.descriptionView.setText(forecast);
-        // For accessibility, provide a description of the weather icon.
-        viewHolder.iconView.setContentDescription(forecast);
+        // For accessibility, we don't want a content description for the icon field
+        // because the information is repeated in the description view and the icon
+        // is not individually selectable
 
         // Read user preference for metric or imperial temperature units
         boolean isMetric = Utility.isMetric(context);
 
         // Read high temperature from cursor
         double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText(Utility.formatTemperature(context, high));
+        String strHigh = Utility.formatTemperature(context, high);
+        viewHolder.highTempView.setText(strHigh);
+        viewHolder.highTempView.setContentDescription(context.getString(R.string.a11y_high_temp, strHigh));
 
         // Read low temperature from cursor
         double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText(Utility.formatTemperature(context, low));
+        String strLow = Utility.formatTemperature(context, low);
+        viewHolder.lowTempView.setText(strLow);
+        viewHolder.lowTempView.setContentDescription(context.getString(R.string.a11y_low_temp, strLow));
     }
 
     @Override
