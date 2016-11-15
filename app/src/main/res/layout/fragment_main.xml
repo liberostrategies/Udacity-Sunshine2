@@ -16,4 +16,17 @@
         android:divider="@null"
         android:id="@+id/listview_forecast" />
 
+    <!-- Empty List -->
+    <TextView
+        android:text="@string/empty_forecast_list"
+        android:id="@+id/listview_forecast_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:text="@string/empty_forecast_list" />
+
 </FrameLayout>
