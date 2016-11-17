@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016. Libero Strategies, LLC - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is strictly prohibited
+  ~ Proprietary and Confidential
+  -->
+
+<resources>
+    <array name="pref_units_values">
+        <item>imperial</item>
+        <item>metric</item>
+    </array>
+    <array name="pref_units_options">
+        <item>Imperial</item>
+        <item>Metric</item>
+    </array>
+
+    <!-- Names of the art packs available -->
+    <string-array name="pref_art_pack_options">
+        <item>@string/pref_art_pack_label_colored</item>
+        <item>@string/pref_art_pack_label_monochrome</item>
+    </string-array>
+
+    <!-- Format for retrieving art from an external source [CHAR LIMIT=NONE] -->
+    <string-array name="pref_art_pack_values">
+        <item>@string/pref_art_pack_colored</item>
+        <item>@string/pref_art_pack_monochrome</item>
+    </string-array>
+</resources>

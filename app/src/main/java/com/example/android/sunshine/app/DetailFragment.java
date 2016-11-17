@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.sunshine.app.data.WeatherContract;
 
 /**
@@ -203,18 +204,26 @@ public class DetailFragment extends Fragment
             return;
         }
 
-        mImageView.setImageResource(Utility.getArtResourceForWeatherCondition(data.getInt(COL_WEATHER_CONDITION_ID)));
+        int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
+//        mImageView.setImageResource(Utility.getArtResourceForWeatherCondition(data.getInt(COL_WEATHER_CONDITION_ID)));
+        Glide.with(this)
+                .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
+                .error(Utility.getArtResourceForWeatherCondition(weatherId))
+                .crossFade()
+                .into(mImageView);
         String dateText = Utility.getFriendlyDayString(getActivity(), data.getLong(COL_WEATHER_DATE));
         mDateView.setText(dateText);
         String weatherDescription = data.getString(COL_WEATHER_DESC);
         mForecastView.setText(weatherDescription);
         // For accessibility, provide a description of the weather icon.
-        mImageView.setContentDescription(weatherDescription);
+        mImageView.setContentDescription(getString(R.string.a11y_forecast, weatherDescription));
         boolean isMetric = Utility.isMetric(getActivity());
         String high = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MAX_TEMP));
         mHighTempView.setText(high);
+        mHighTempView.setContentDescription(getString(R.string.a11y_high_temp, high));
         String min = Utility.formatTemperature(getActivity(), data.getDouble(COL_WEATHER_MIN_TEMP));
         mLowTempView.setText(min);
+        mLowTempView.setContentDescription(getString(R.string.a11y_low_temp, min));
 //        TextView detailTextView = (TextView) getView().findViewById(R.id.detailed_text);
         mForecastStr = String.format("%s - %s - %s/%s", dateText, weatherDescription, high, min);
         Log.d(LOG_TAG, "forecast string: " + mForecastStr);
@@ -222,7 +231,9 @@ public class DetailFragment extends Fragment
         mHumidityView.setText(getActivity().getString(R.string.format_humidity, data.getFloat(COL_WEATHER_HUMIDITY)));
         mWindView.setText(Utility.getFormattedWind(getActivity(), data.getFloat(COL_WEATHER_WIND_SPEED), data.getFloat(COL_WEATHER_DEGREES)));
 //        ((WindView)mWindView).populate(data.getFloat(COL_WEATHER_WIND_SPEED), data.getFloat(COL_WEATHER_DEGREES));
+        mWindView.setContentDescription(mWindView.getText());
         mPressureView.setText(getActivity().getString(R.string.format_pressure, data.getFloat(COL_WEATHER_PRESSURE)));
+        mPressureView.setContentDescription(getString(R.string.a11y_forecast, mPressureView.getText()));
         if (mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createShareForecastIntent());
         }

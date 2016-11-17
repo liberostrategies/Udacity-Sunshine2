@@ -23,6 +23,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
         android:gravity="center_horizontal"
         android:background="@drawable/touch_selector">
 
@@ -59,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center_horizontal|bottom">
 
         <ImageView
@@ -66,7 +68,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/list_item_icon"
             android:src="@mipmap/ic_launcher"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"/>
 
         <TextView
             android:layout_width="wrap_content"
