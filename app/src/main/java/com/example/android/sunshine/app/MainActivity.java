@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 public class MainActivity extends ActionBarActivity
     implements ForecastFragment.Callback {
@@ -20,6 +22,7 @@ public class MainActivity extends ActionBarActivity
     /** Eventually used in onResume */
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
     private boolean mTwoPane;
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @Override
     protected void onResume() {
@@ -89,7 +92,35 @@ public class MainActivity extends ActionBarActivity
         forecastFragment.setUseTodayLayout(!mTwoPane);
 
         SunshineSyncAdapter.initializeSyncAdapter(this);
+
+        if (!checkPlayServices()) {
+            // This is where we could either prompt a user that they should install
+            // the latest version of Google Play Services, or add an error snackbar
+            // that some features won't be available.
+        }
     }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(LOG_TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
