@@ -21,9 +21,6 @@ import com.example.android.sunshine.app.MainActivity;
 import com.example.android.sunshine.app.R;
 import com.google.android.gms.gcm.GcmListenerService;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by pink on 11/17/2016.
  */
@@ -57,17 +54,19 @@ public class MyGcmListenerService extends GcmListenerService {
             // Not a bad idea to check that the message is coming from your server.
             if ((senderId).equals(from)) {
                 // Process message and then post a notification of the received message.
-                try {
-                    JSONObject jsonObject = new JSONObject(data.getString(EXTRA_DATA));
-                    String weather = jsonObject.getString(EXTRA_WEATHER);
-                    String location = jsonObject.getString(EXTRA_LOCATION);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(data.getString(EXTRA_DATA));
+//                    String weather = jsonObject.getString(EXTRA_WEATHER);
+//                    String location = jsonObject.getString(EXTRA_LOCATION);
+                    String weather = data.getString(EXTRA_WEATHER);
+                    String location = data.getString(EXTRA_LOCATION);
                     String alert =
                             String.format(getString(R.string.gcm_weather_alert), weather, location);
                     sendNotification(alert);
-                } catch (JSONException e) {
-                    // JSON parsing failed, so we just let this message go, since GCM is not one
-                    // of our critical features.
-                }
+//                } catch (JSONException e) {
+//                    // JSON parsing failed, so we just let this message go, since GCM is not one
+//                    // of our critical features.
+//                }
             }
             Log.i(TAG, "Received: " + data.toString());
         }
