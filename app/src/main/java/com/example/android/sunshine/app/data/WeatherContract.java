@@ -35,6 +35,7 @@ public class WeatherContract {
     // Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
     // the content provider.
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
     // Possible paths (appended to base content URI for possible URI's)
     // For instance, content://com.example.android.sunshine.app/weather/ is a valid path for
     // looking at weather data. content://com.example.android.sunshine.app/givemeroot/ will fail,
@@ -53,25 +54,30 @@ public class WeatherContract {
         return time.setJulianDay(julianDay);
     }
 
-    /*
-        Inner class that defines the table contents of the location table
-        Students: This is where you will add the strings.  (Similar to what has been
-        done for WeatherEntry)
-     */
+    /* Inner class that defines the table contents of the location table */
     public static final class LocationEntry implements BaseColumns {
+
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_LOCATION).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
-
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
 
         // Table name
         public static final String TABLE_NAME = "location";
-        public static final String COLUMN_LOCATION_SETTING = "location";
+
+        // The location setting string is what will be sent to openweathermap
+        // as the location query.
+        public static final String COLUMN_LOCATION_SETTING = "location_setting";
+
+        // Human readable location string, provided by the API.  Because for styling,
+        // "Mountain View" is more recognizable than 94043.
         public static final String COLUMN_CITY_NAME = "city_name";
+
+        // In order to uniquely pinpoint the location on the map when we launch the
+        // map intent, we store the latitude and longitude as returned by openweathermap.
         public static final String COLUMN_COORD_LAT = "coord_lat";
         public static final String COLUMN_COORD_LONG = "coord_long";
 
@@ -82,12 +88,15 @@ public class WeatherContract {
 
     /* Inner class that defines the table contents of the weather table */
     public static final class WeatherEntry implements BaseColumns {
+
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_WEATHER).build();
+
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_WEATHER;
+
         public static final String TABLE_NAME = "weather";
 
         // Column with the foreign key into the location table.
@@ -121,19 +130,23 @@ public class WeatherContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
+        /*
+            Student: This is the buildWeatherLocation function you filled in.
+         */
         public static Uri buildWeatherLocation(String locationSetting) {
             return CONTENT_URI.buildUpon().appendPath(locationSetting).build();
         }
 
-        public static Uri buildWeatherLocationWithStartDate(String locationSetting, long startDate) {
+        public static Uri buildWeatherLocationWithStartDate(
+                String locationSetting, long startDate) {
             long normalizedDate = normalizeDate(startDate);
             return CONTENT_URI.buildUpon().appendPath(locationSetting)
-                .appendQueryParameter(COLUMN_DATE, Long.toString(normalizedDate)).build();
+                    .appendQueryParameter(COLUMN_DATE, Long.toString(normalizedDate)).build();
         }
 
         public static Uri buildWeatherLocationWithDate(String locationSetting, long date) {
             return CONTENT_URI.buildUpon().appendPath(locationSetting)
-                .appendPath(Long.toString(normalizeDate(date))).build();
+                    .appendPath(Long.toString(normalizeDate(date))).build();
         }
 
         public static String getLocationSettingFromUri(Uri uri) {
@@ -142,7 +155,7 @@ public class WeatherContract {
 
         public static long getDateFromUri(Uri uri) {
             return Long.parseLong(uri.getPathSegments().get(2));
-            }
+        }
 
         public static long getStartDateFromUri(Uri uri) {
             String dateString = uri.getQueryParameter(COLUMN_DATE);

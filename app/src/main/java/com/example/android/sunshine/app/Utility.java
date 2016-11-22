@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 The Android Open Source Project
+ * Copyright (C) 2015 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -243,7 +243,7 @@ public class Utility {
      */
     public static boolean usingLocalGraphics(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String sunshineArtPack = context.getString(R.string.pref_art_pack_colored);
+        String sunshineArtPack = context.getString(R.string.pref_art_pack_sunshine);
         return prefs.getString(context.getString(R.string.pref_art_pack_key),
                 sunshineArtPack).equals(sunshineArtPack);
     }
@@ -259,7 +259,7 @@ public class Utility {
     public static String getArtUrlForWeatherCondition(Context context, int weatherId) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String formatArtUrl = prefs.getString(context.getString(R.string.pref_art_pack_key),
-                context.getString(R.string.pref_art_pack_colored));
+                context.getString(R.string.pref_art_pack_sunshine));
 
         // Based on weather code data found at:
         // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes

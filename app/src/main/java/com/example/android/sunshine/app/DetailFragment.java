@@ -3,12 +3,7 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and Confidential
  */
-
 package com.example.android.sunshine.app;
-
-/**
- * Created by pink on 10/19/2016.
- */
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
@@ -152,8 +148,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         // replace the uri, since the location has changed
         Uri uri = mUri;
         if (null != uri) {
-            long date = WeatherContract.WeatherEntry.getDateFromUri(uri);
-            Uri updatedUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
+            long date = WeatherEntry.getDateFromUri(uri);
+            Uri updatedUri = WeatherEntry.buildWeatherLocationWithDate(newLocation, date);
             mUri = updatedUri;
             getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
         }

@@ -1,7 +1,17 @@
 /*
- * Copyright (c) 2016. Libero Strategies, LLC - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and Confidential
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.example.android.sunshine.app.gcm;
@@ -21,9 +31,8 @@ import com.example.android.sunshine.app.MainActivity;
 import com.example.android.sunshine.app.R;
 import com.google.android.gms.gcm.GcmListenerService;
 
-/**
- * Created by pink on 11/17/2016.
- */
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -54,19 +63,17 @@ public class MyGcmListenerService extends GcmListenerService {
             // Not a bad idea to check that the message is coming from your server.
             if ((senderId).equals(from)) {
                 // Process message and then post a notification of the received message.
-//                try {
-//                    JSONObject jsonObject = new JSONObject(data.getString(EXTRA_DATA));
-//                    String weather = jsonObject.getString(EXTRA_WEATHER);
-//                    String location = jsonObject.getString(EXTRA_LOCATION);
-                    String weather = data.getString(EXTRA_WEATHER);
-                    String location = data.getString(EXTRA_LOCATION);
+                try {
+                    JSONObject jsonObject = new JSONObject(data.getString(EXTRA_DATA));
+                    String weather = jsonObject.getString(EXTRA_WEATHER);
+                    String location = jsonObject.getString(EXTRA_LOCATION);
                     String alert =
                             String.format(getString(R.string.gcm_weather_alert), weather, location);
                     sendNotification(alert);
-//                } catch (JSONException e) {
-//                    // JSON parsing failed, so we just let this message go, since GCM is not one
-//                    // of our critical features.
-//                }
+                } catch (JSONException e) {
+                    // JSON parsing failed, so we just let this message go, since GCM is not one
+                    // of our critical features.
+                }
             }
             Log.i(TAG, "Received: " + data.toString());
         }
