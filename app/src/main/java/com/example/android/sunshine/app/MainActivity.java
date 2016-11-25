@@ -48,8 +48,10 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         if (findViewById(R.id.weather_detail_container) != null) {
             // The detail container view will be present only in the large-screen layouts
@@ -66,7 +68,9 @@ public class MainActivity extends AppCompatActivity implements ForecastFragment.
             }
         } else {
             mTwoPane = false;
-            getSupportActionBar().setElevation(0f);
+            if (toolbar != null) {
+                getSupportActionBar().setElevation(0f);
+            }
         }
 
         ForecastFragment forecastFragment =  ((ForecastFragment)getSupportFragmentManager()
