@@ -4,74 +4,73 @@
   ~ Unauthorized copying of this file, via any medium is strictly prohibited
   ~ Proprietary and Confidential
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- Layout for weather forecast list item for future day (not today) -->
+<!-- Make the background of our selector a non-transparent color -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:padding="16dp"
     android:background="@drawable/touch_selector"
-    android:orientation="horizontal">
+    >
 
-    <FrameLayout
-        android:layout_width="60dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0">
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:paddingLeft="@dimen/abc_list_item_padding_horizontal_material"
+        android:paddingRight="@dimen/abc_list_item_padding_horizontal_material"
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/list_item_icon"
-            android:layout_weight="0"
-            android:src="@mipmap/ic_launcher"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"/>
-    </FrameLayout>
+            android:layout_gravity="center"
+            android:layout_width="@dimen/list_icon"
+            android:layout_height="@dimen/list_icon"
+            android:layout_marginRight="@dimen/abc_list_item_padding_horizontal_material"
+            android:layout_marginEnd="@dimen/abc_list_item_padding_horizontal_material"
+            />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="7"
-        android:paddingLeft="16dp">
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/list_item_date_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+
+            <TextView
+                android:id="@+id/list_item_forecast_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/secondary_text"/>
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/list_item_high_textview"
+            android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_date"
-            android:textSize="20sp"
-            android:fontFamily="sans-serif-condensed" />
-            <!--android:layout_weight="1" -->
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:layout_marginRight="@dimen/forecast_temperature_space"
+            android:layout_marginEnd="@dimen/forecast_temperature_space"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/forecast_text_size"/>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/list_item_low_textview"
+            android:layout_width="@dimen/forecast_text_width"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:fontFamily="sans-serif-condensed"
-            android:id="@+id/list_item_forecast" />
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/forecast_low_text"
+            android:textSize="@dimen/forecast_text_size"/>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="5"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:id="@+id/list_item_temp_max"
-            android:gravity="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:id="@+id/list_item_temp_min"
-            android:gravity="center" />
-    </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>
