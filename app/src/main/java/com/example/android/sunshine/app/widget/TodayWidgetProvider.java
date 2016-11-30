@@ -6,42 +6,39 @@
 
 package com.example.android.sunshine.app.widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.RemoteViews;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 
-import com.example.android.sunshine.app.MainActivity;
-import com.example.android.sunshine.app.R;
-import com.example.android.sunshine.app.Utility;
+import com.example.android.sunshine.app.sync.SunshineSyncAdapter;
 
 /**
- * Created by pink on 11/29/2016.
+ * Provider for a widget showing today's weather.
+ *
+ * Delegates widget updating to {@link TodayWidgetIntentService} to ensure that
+ * data retrieval is done on a background thread
  */
-
 public class TodayWidgetProvider extends AppWidgetProvider {
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        int weatherArtResourceId = R.drawable.art_clear;
-        String description = "Clear";
-        double maxTemp = 24;
-        String formattedMaxTemperature = Utility.formatTemperature(context, maxTemp);
+        context.startService(new Intent(context, TodayWidgetIntentService.class));
+    }
 
-        for (int appWidgetId : appWidgetIds) {
-            RemoteViews views = new RemoteViews(
-                context.getPackageName(),
-                    R.layout.widget_today_small);
-            views.setImageViewResource(R.id.widget_icon, weatherArtResourceId);
-            views.setTextViewText(R.id.widget_high_temperature, formattedMaxTemperature);
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager,
+                                          int appWidgetId, Bundle newOptions) {
+        context.startService(new Intent(context, TodayWidgetIntentService.class));
+    }
 
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent
-                    .getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.widget, pendingIntent);
-
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+    @Override
+    public void onReceive(@NonNull Context context, @NonNull Intent intent) {
+        super.onReceive(context, intent);
+        if (SunshineSyncAdapter.ACTION_DATA_UPDATED.equals(intent.getAction())) {
+            context.startService(new Intent(context, TodayWidgetIntentService.class));
         }
     }
 }
