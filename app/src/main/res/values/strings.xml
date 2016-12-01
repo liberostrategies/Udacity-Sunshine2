@@ -95,9 +95,6 @@
     <!-- Value in SharedPreferences for cute dogs art pack  option [CHAR LIMIT=NONE] -->
     <string name="pref_art_pack_cute_dogs" translatable="false">https://raw.githubusercontent.com/udacity/Sunshine-Version-2/sunshine_master/app/src/main/res/drawable-mdpi/art_%s.png</string>
 
-    <!-- Strings related to Widgets -->
-    <string name="title_widget_today">Sunshine Today</string>
-
     <!-- Language-specific constants -->
     <string name="today">Today</string>
 
@@ -135,6 +132,10 @@
 
     <!-- Strings related to Notification preference -->
     <string name="pref_last_notification">last_notification</string>
+
+    <!-- Strings related to Widgets -->
+    <string name="title_widget_today">Sunshine Today</string>
+    <string name="title_widget_detail">Sunshine Details</string>
 
     <!-- Empty Weather Database -->
     <string name="empty_forecast_list">No Weather Information Available</string>

@@ -17,15 +17,12 @@ package com.example.android.sunshine.app;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -127,13 +124,16 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         mCursor.moveToPosition(position);
         int weatherId = mCursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
         int defaultImage;
+        boolean useLongToday;
 
         switch (getItemViewType(position)) {
             case VIEW_TYPE_TODAY:
                 defaultImage = Utility.getArtResourceForWeatherCondition(weatherId);
+                useLongToday = true;
                 break;
             default:
                 defaultImage = Utility.getIconResourceForWeatherCondition(weatherId);
+                useLongToday = false;
         }
 
         if ( Utility.usingLocalGraphics(mContext) ) {
@@ -154,7 +154,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.Foreca
         long dateInMillis = mCursor.getLong(ForecastFragment.COL_WEATHER_DATE);
 
         // Find TextView and set formatted date on it
-        forecastAdapterViewHolder.mDateView.setText(Utility.getFriendlyDayString(mContext, dateInMillis));
+        forecastAdapterViewHolder.mDateView.setText(Utility.getFriendlyDayString(mContext, dateInMillis, useLongToday));
 
         // Read weather forecast from cursor
         String description = Utility.getStringForWeatherCondition(mContext, weatherId);

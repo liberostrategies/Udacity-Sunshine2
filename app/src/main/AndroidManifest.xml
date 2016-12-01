@@ -53,7 +53,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +64,8 @@
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Details">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.sunshine.app.MainActivity" />
@@ -117,6 +119,34 @@
                 <category android:name="com.example.android.sunshine.app" />
             </intent-filter>
         </receiver>
+        <!-- Today Widget -->
+        <receiver
+            android:name=".widget.TodayWidgetProvider"
+            android:label="@string/title_widget_today" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.android.sunshine.app.ACTION_DATA_UPDATED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_today" />
+        </receiver>
+        <service android:name=".widget.TodayWidgetIntentService" />
+        <receiver
+            android:name=".widget.DetailWidgetProvider"
+            android:label="@string/title_widget_detail"
+            android:enabled="@bool/widget_detail_enabled" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.android.sunshine.app.ACTION_DATA_UPDATED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info_detail" />
+        </receiver>
+        <service
+            android:name=".widget.DetailWidgetRemoteViewsService"
+            android:enabled="@bool/widget_detail_enabled"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
         <service
             android:name="gcm.MyGcmListenerService"
             android:exported="false" >
@@ -135,18 +165,6 @@
             android:name=".gcm.RegistrationIntentService"
             android:exported="false" >
         </service>
-        <receiver
-            android:name=".widget.TodayWidgetProvider"
-            android:label="@string/title_widget_today" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.android.sunshine.app.ACTION_DATA_UPDATED" />
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info_today" />
-        </receiver>
-        <service android:name=".widget.TodayWidgetIntentService" />
     </application>
 
 </manifest>
